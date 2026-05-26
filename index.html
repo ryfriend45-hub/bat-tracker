@@ -408,6 +408,10 @@ function hideBanner(){
   if(b)b.style.display='none';
 }
 
+function stripHTML(s){
+  return s?s.replace(/<[^>]+>/g,'').trim():s;
+}
+
 function parsePct(v){
   if(typeof v==='number')return v>1?v:v*100;
   if(typeof v==='string')return parseFloat(v.replace('%',''));
@@ -465,8 +469,11 @@ async function fetchAll(){
     if(raw.status==='rejected'){showBanner('Live data unavailable — showing sample');loadSample();return;}
     hrMap=hrs.status==='fulfilled'?hrs.value:SAMPLE_HRS;
     const mapped=raw.value.map(p=>({
-      name:p.PlayerName||p.Name||'—',team:p.Team||'—',pos:p.Pos||'',
-      batSpd:parseFloat(p['c_206']??0),ev:parseFloat(p['c_350']??p['EV']??0),
+      name:stripHTML(p.PlayerName||p.Name||'—'),
+      team:stripHTML(p.Team||'—'),
+      pos:p.Pos||'',
+      batSpd:parseFloat(p['c_206']??0),
+      ev:parseFloat(p['c_350']??p['EV']??0),
       barrel:p['c_308']==null&&p['Barrel%']==null?null:parsePct(p['c_308']??p['Barrel%']??0),
       blast:p['c_346']==null&&p['BlastContact%']==null?null:parsePct(p['c_346']??p['BlastContact%']??0),
       pull:p['c_305']==null&&p['Pull%']==null?null:parsePct(p['c_305']??p['Pull%']??0),
