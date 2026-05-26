@@ -196,7 +196,7 @@ header{padding:calc(var(--st) + 14px) 18px 12px;background:var(--bg);border-bott
         <span class="fs-name">Bat Spd</span>
         <div class="fs-track">
           <div class="fs-fill" id="bsFill" style="background:var(--blue)"></div>
-          <input class="fs-input" type="range" id="bsMin" min="65" max="80" step="0.5" value="65"
+          <input class="fs-input" type="range" id="bsMin" min="65" max="85" step="0.5" value="65"
             oninput="onSlider('bs',this.value,'bsVal',65,80,'≥ ','',1)">
         </div>
         <span class="fs-val" id="bsVal">≥ 65.0</span>
@@ -550,7 +550,7 @@ function renderCards(){
     ${hot?`<div class="hr-pill">🔥</div>`:''}
   </div>
   <div class="stat-rows">
-    <div class="stat-row"><span class="stat-name">Bat Spd</span>${bar(p.batSpd,65,82,C.batSpd)}<span class="stat-val">${p.batSpd.toFixed(1)}</span></div>
+    <div class="stat-row"><span class="stat-name">Bat Spd</span>${bar(p.batSpd,65,85,C.batSpd)}<span class="stat-val">${p.batSpd.toFixed(1)}</span></div>
     <div class="stat-row"><span class="stat-name">Exit Velo</span>${bar(p.ev,75,105,C.ev)}<span class="stat-val">${p.ev.toFixed(1)}</span></div>
     <div class="stat-row"><span class="stat-name">Barrel%</span>${bar(p.barrel,0,50,C.barrel)}<span class="stat-val">${p.barrel===null?'—':p.barrel.toFixed(1)+'%'}</span></div>
     <div class="stat-row"><span class="stat-name">Blast%</span>${bar(p.blast,0,50,C.blast)}<span class="stat-val">${p.blast===null?'—':p.blast.toFixed(1)+'%'}</span></div>
