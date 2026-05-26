@@ -469,13 +469,13 @@ async function fetchAll(){
     hrMap=hrs.status==='fulfilled'?hrs.value:SAMPLE_HRS;
     const mapped=raw.value.map(p=>({
       name:stripHTML(p.PlayerName||p.Name||'—'),
-      team:stripHTML(p.Team||'—'),
-      pos:p.Pos||'',
-      batSpd:parseFloat(p['c_206']??0),
-      ev:parseFloat(p['c_350']??p['EV']??0),
-      barrel:p['c_308']==null&&p['Barrel%']==null?null:parsePct(p['c_308']??p['Barrel%']??0),
-      blast:p['c_346']==null&&p['BlastContact%']==null?null:parsePct(p['c_346']??p['BlastContact%']??0),
-      pull:p['c_305']==null&&p['Pull%']==null?null:parsePct(p['c_305']??p['Pull%']??0),
+      team:stripHTML(p.TeamNameAbb||p.Team||'—'),
+      pos:p.Pos||p.position||'',
+      batSpd:parseFloat(p['AvgBatSpeed']??0),
+      ev:parseFloat(p['EV']??0),
+      barrel:p['Barrel%']==null?null:parsePct(p['Barrel%']??0),
+      blast:p['BlastContact%']==null?null:parsePct(p['BlastContact%']??0),
+      pull:p['Pull%']==null?null:parsePct(p['Pull%']??0),
     })).filter(p=>p.batSpd>0);
     if(!mapped.length){showBanner('API returned no data — showing sample');loadSample();return;}
     hideBanner();
