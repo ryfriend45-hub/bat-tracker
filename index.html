@@ -419,20 +419,19 @@ function parsePct(v){
 }
 
 async function fetchFanGraphs(start,end){
-  const urls=[
-    `/.netlify/functions/fangraphs?start=${start}&end=${end}`,
-    `https://www.fangraphs.com/api/leaders/major-league/data?age=&pos=all&stats=bat&lg=all&qual=1&season=2026&season1=2026&startdate=${start}&enddate=${end}&month=1000&hand=&team=0&pageitems=2000&pagenum=1&ind=0&rost=&players=&type=c,206,346,350,305,308&postseason=&sortdir=default&sortstat=c_206`
-  ];
-  for(const url of urls){
-    try{
-      const r=await fetch(url,{signal:fetchCtl.signal});
-      if(!r.ok)continue;
-      const j=await r.json();
-      const data=j.data||j;
-      if(Array.isArray(data)&&data.length)return data;
-    }catch(e){if(e.name==='AbortError')throw e;}
+  // Call FanGraphs directly from the browser — no proxy needed
+  const url=`https://www.fangraphs.com/api/leaders/major-league/data?age=&pos=all&stats=bat&lg=all&qual=1&season=2026&season1=2026&startdate=${start}&enddate=${end}&month=1000&hand=&team=0&pageitems=2000&pagenum=1&ind=0&rost=&players=&type=c,206,346,350,305,308&postseason=&sortdir=default&sortstat=c_206`;
+  try{
+    const r=await fetch(url,{signal:fetchCtl.signal,mode:'cors'});
+    if(!r.ok)throw new Error('FanGraphs '+r.status);
+    const j=await r.json();
+    const data=j.data||j;
+    if(Array.isArray(data)&&data.length)return data;
+    throw new Error('empty');
+  }catch(e){
+    if(e.name==='AbortError')throw e;
+    throw new Error('FanGraphs unreachable');
   }
-  throw new Error('FanGraphs unreachable');
 }
 
 async function fetchMLBHRs(){
