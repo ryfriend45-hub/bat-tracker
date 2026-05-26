@@ -1,62 +1,50 @@
-// netlify/functions/fangraphs.js
-// Proxies requests to FanGraphs API to avoid CORS issues in the browser
-
 exports.handler = async function(event) {
-  const { start, end } = event.queryStringParameters || {};
+  var params = event.queryStringParameters || {};
+  var start = params.start;
+  var end = params.end;
 
   if (!start || !end) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing start or end date' }) };
+    return { statusCode: 400, body: '{"error":"Missing dates"}' };
   }
 
-  // Validate date format (YYYY-MM-DD)
-  const dateRe = /^\d{4}-\d{2}-\d{2}$/;
-  if (!dateRe.test(start) || !dateRe.test(end)) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Invalid date format' }) };
-  }
-
-  const url = [
-    'https://www.fangraphs.com/api/leaders/major-league/data',
-    `?age=&pos=all&stats=bat&lg=all&qual=1`,
-    `&season=2026&season1=2026`,
-    `&startdate=${start}&enddate=${end}`,
-    `&month=1000&hand=&team=0`,
-    `&pageitems=2000&pagenum=1`,
-    `&ind=0&rost=&players=`,
-    `&type=c,206,346,350,305,308`,
-    `&postseason=&sortdir=default&sortstat=c_206`
-  ].join('');
+  var url = 'https://www.fangraphs.com/api/leaders/major-league/data'
+    + '?age=&pos=all&stats=bat&lg=all&qual=1'
+    + '&season=2026&season1=2026'
+    + '&startdate=' + start
+    + '&enddate=' + end
+    + '&month=1000&hand=&team=0'
+    + '&pageitems=2000&pagenum=1'
+    + '&ind=0&rost=&players='
+    + '&type=c,206,346,350,305,308'
+    + '&postseason=&sortdir=default&sortstat=c_206';
 
   try {
-    const response = await fetch(url, {
+    var response = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; BatTracker/1.0)',
-        'Accept': 'application/json',
-        'Referer': 'https://www.fangraphs.com/',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': 'https://www.fangraphs.com/leaders/major-league',
+        'Origin': 'https://www.fangraphs.com'
       }
     });
 
     if (!response.ok) {
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ error: `FanGraphs returned ${response.status}` })
-      };
+      return { statusCode: response.status, body: '{"error":"FanGraphs error ' + response.status + '"}' };
     }
 
-    const data = await response.json();
+    var data = await response.json();
 
     return {
       statusCode: 200,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'public, s-maxage=300', // cache 5 min on CDN
+        'Cache-Control': 'public, s-maxage=300'
       },
       body: JSON.stringify(data)
     };
   } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: err.message })
-    };
+    return { statusCode: 500, body: '{"error":"' + err.message + '"}' };
   }
 };
