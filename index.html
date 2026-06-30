@@ -265,6 +265,15 @@ header{padding:calc(var(--st) + 14px) 18px 12px;background:var(--bg);border-bott
         </div>
         <span class="fs-val" id="atkAngMaxVal">≤ 40°</span>
       </div>
+      <div class="fs-row">
+        <span class="fs-name">Ideal% ≥</span>
+        <div class="fs-track">
+          <div class="fs-fill" id="idealAtkAngFill" style="width:0%;background:#34d399"></div>
+          <input class="fs-input" type="range" id="idealAtkAngMin" min="0" max="100" step="1" value="0"
+            oninput="onSlider('idealAtkAng',this.value,'idealAtkAngVal',0,100,'≥ ','%',0)">
+        </div>
+        <span class="fs-val" id="idealAtkAngVal">≥ 0%</span>
+      </div>
     </div>
     <div class="hr-filter-row">
       <label class="toggle" for="hrOnly">
@@ -305,31 +314,31 @@ header{padding:calc(var(--st) + 14px) 18px 12px;background:var(--bg);border-bott
 
 <script>
 const SAMPLE=[
-  {name:'Nick Kurtz',team:'ATH',pos:'1B',batSpd:79.4,ev:96.5,barrel:37.5,blast:26.7,pull:12.5,atkAng:12.3},
-  {name:'Jordan Walker',team:'STL',pos:'OF',batSpd:78.7,ev:92.3,barrel:14.3,blast:22.2,pull:28.6,atkAng:null},
-  {name:'Jo Adell',team:'LAA',pos:'OF',batSpd:78.6,ev:96.9,barrel:20.0,blast:9.5,pull:20.0,atkAng:null},
-  {name:'Junior Caminero',team:'TBR',pos:'3B',batSpd:78.1,ev:91.1,barrel:9.1,blast:23.1,pull:54.5,atkAng:null},
-  {name:'Yordan Alvarez',team:'HOU',pos:'DH',batSpd:78.0,ev:94.2,barrel:16.7,blast:20.0,pull:16.7,atkAng:null},
-  {name:'Henry Bolte',team:'ATH',pos:'OF',batSpd:77.5,ev:93.9,barrel:0.0,blast:37.5,pull:27.3,atkAng:null},
-  {name:'Jorge Soler',team:'LAA',pos:'DH',batSpd:77.3,ev:93.3,barrel:0.0,blast:10.0,pull:100.0,atkAng:null},
-  {name:'Oneil Cruz',team:'PIT',pos:'SS',batSpd:77.1,ev:97.6,barrel:0.0,blast:25.0,pull:37.5,atkAng:null},
-  {name:'James Wood',team:'WSN',pos:'OF',batSpd:76.9,ev:100.1,barrel:22.2,blast:42.9,pull:11.1,atkAng:null},
-  {name:'Coby Mayo',team:'BAL',pos:'1B',batSpd:76.9,ev:97.5,barrel:14.3,blast:14.3,pull:71.4,atkAng:null},
-  {name:'Austin Riley',team:'ATL',pos:'3B',batSpd:76.8,ev:86.5,barrel:0.0,blast:11.5,pull:60.0,atkAng:null},
-  {name:'Zach Cole',team:'HOU',pos:'OF',batSpd:76.7,ev:93.2,barrel:30.0,blast:17.6,pull:30.0,atkAng:null},
-  {name:'Corbin Carroll',team:'ARI',pos:'OF',batSpd:76.5,ev:93.1,barrel:11.1,blast:21.4,pull:66.7,atkAng:null},
-  {name:'Munetaka Murakami',team:'CHW',pos:'1B',batSpd:76.4,ev:93.6,barrel:40.0,blast:31.3,pull:30.0,atkAng:null},
-  {name:'Kyle Schwarber',team:'PHI',pos:'DH',batSpd:76.3,ev:98.8,barrel:44.4,blast:25.0,pull:44.4,atkAng:null},
-  {name:'Tyler Soderstrom',team:'ATH',pos:'1B',batSpd:76.2,ev:92.3,barrel:10.0,blast:30.8,pull:40.0,atkAng:null},
-  {name:'Mike Trout',team:'LAA',pos:'OF',batSpd:76.1,ev:96.3,barrel:14.3,blast:12.5,pull:0.0,atkAng:null},
-  {name:'Gunnar Henderson',team:'BAL',pos:'SS',batSpd:76.0,ev:90.1,barrel:10.0,blast:16.7,pull:30.0,atkAng:null},
-  {name:'Fernando Tatis Jr.',team:'SDP',pos:'SS',batSpd:75.9,ev:88.1,barrel:9.1,blast:15.8,pull:45.5,atkAng:null},
-  {name:'Shea Langeliers',team:'ATH',pos:'C',batSpd:75.9,ev:92.5,barrel:7.1,blast:33.3,pull:21.4,atkAng:null},
-  {name:'Julio Rodríguez',team:'SEA',pos:'OF',batSpd:75.7,ev:90.7,barrel:0.0,blast:21.4,pull:41.7,atkAng:null},
-  {name:'Elly De La Cruz',team:'CIN',pos:'SS',batSpd:75.3,ev:95.3,barrel:15.4,blast:25.0,pull:23.1,atkAng:null},
-  {name:'Jake Burger',team:'TEX',pos:'1B',batSpd:75.3,ev:88.9,barrel:0.0,blast:0.0,pull:50.0,atkAng:null},
-  {name:'Brent Rooker',team:'ATH',pos:'DH',batSpd:75.2,ev:98.8,barrel:18.2,blast:33.3,pull:36.4,atkAng:null},
-  {name:'Matt Olson',team:'ATL',pos:'1B',batSpd:75.1,ev:92.2,barrel:0.0,blast:17.6,pull:33.3,atkAng:null},
+  {name:'Nick Kurtz',team:'ATH',pos:'1B',batSpd:79.4,ev:96.5,barrel:37.5,blast:26.7,pull:12.5,atkAng:12.3,idealAtkAng:null},
+  {name:'Jordan Walker',team:'STL',pos:'OF',batSpd:78.7,ev:92.3,barrel:14.3,blast:22.2,pull:28.6,atkAng:null,idealAtkAng:null},
+  {name:'Jo Adell',team:'LAA',pos:'OF',batSpd:78.6,ev:96.9,barrel:20.0,blast:9.5,pull:20.0,atkAng:null,idealAtkAng:null},
+  {name:'Junior Caminero',team:'TBR',pos:'3B',batSpd:78.1,ev:91.1,barrel:9.1,blast:23.1,pull:54.5,atkAng:null,idealAtkAng:null},
+  {name:'Yordan Alvarez',team:'HOU',pos:'DH',batSpd:78.0,ev:94.2,barrel:16.7,blast:20.0,pull:16.7,atkAng:null,idealAtkAng:null},
+  {name:'Henry Bolte',team:'ATH',pos:'OF',batSpd:77.5,ev:93.9,barrel:0.0,blast:37.5,pull:27.3,atkAng:null,idealAtkAng:null},
+  {name:'Jorge Soler',team:'LAA',pos:'DH',batSpd:77.3,ev:93.3,barrel:0.0,blast:10.0,pull:100.0,atkAng:null,idealAtkAng:null},
+  {name:'Oneil Cruz',team:'PIT',pos:'SS',batSpd:77.1,ev:97.6,barrel:0.0,blast:25.0,pull:37.5,atkAng:null,idealAtkAng:null},
+  {name:'James Wood',team:'WSN',pos:'OF',batSpd:76.9,ev:100.1,barrel:22.2,blast:42.9,pull:11.1,atkAng:null,idealAtkAng:null},
+  {name:'Coby Mayo',team:'BAL',pos:'1B',batSpd:76.9,ev:97.5,barrel:14.3,blast:14.3,pull:71.4,atkAng:null,idealAtkAng:null},
+  {name:'Austin Riley',team:'ATL',pos:'3B',batSpd:76.8,ev:86.5,barrel:0.0,blast:11.5,pull:60.0,atkAng:null,idealAtkAng:null},
+  {name:'Zach Cole',team:'HOU',pos:'OF',batSpd:76.7,ev:93.2,barrel:30.0,blast:17.6,pull:30.0,atkAng:null,idealAtkAng:null},
+  {name:'Corbin Carroll',team:'ARI',pos:'OF',batSpd:76.5,ev:93.1,barrel:11.1,blast:21.4,pull:66.7,atkAng:null,idealAtkAng:null},
+  {name:'Munetaka Murakami',team:'CHW',pos:'1B',batSpd:76.4,ev:93.6,barrel:40.0,blast:31.3,pull:30.0,atkAng:null,idealAtkAng:null},
+  {name:'Kyle Schwarber',team:'PHI',pos:'DH',batSpd:76.3,ev:98.8,barrel:44.4,blast:25.0,pull:44.4,atkAng:null,idealAtkAng:null},
+  {name:'Tyler Soderstrom',team:'ATH',pos:'1B',batSpd:76.2,ev:92.3,barrel:10.0,blast:30.8,pull:40.0,atkAng:null,idealAtkAng:null},
+  {name:'Mike Trout',team:'LAA',pos:'OF',batSpd:76.1,ev:96.3,barrel:14.3,blast:12.5,pull:0.0,atkAng:null,idealAtkAng:null},
+  {name:'Gunnar Henderson',team:'BAL',pos:'SS',batSpd:76.0,ev:90.1,barrel:10.0,blast:16.7,pull:30.0,atkAng:null,idealAtkAng:null},
+  {name:'Fernando Tatis Jr.',team:'SDP',pos:'SS',batSpd:75.9,ev:88.1,barrel:9.1,blast:15.8,pull:45.5,atkAng:null,idealAtkAng:null},
+  {name:'Shea Langeliers',team:'ATH',pos:'C',batSpd:75.9,ev:92.5,barrel:7.1,blast:33.3,pull:21.4,atkAng:null,idealAtkAng:null},
+  {name:'Julio Rodríguez',team:'SEA',pos:'OF',batSpd:75.7,ev:90.7,barrel:0.0,blast:21.4,pull:41.7,atkAng:null,idealAtkAng:null},
+  {name:'Elly De La Cruz',team:'CIN',pos:'SS',batSpd:75.3,ev:95.3,barrel:15.4,blast:25.0,pull:23.1,atkAng:null,idealAtkAng:null},
+  {name:'Jake Burger',team:'TEX',pos:'1B',batSpd:75.3,ev:88.9,barrel:0.0,blast:0.0,pull:50.0,atkAng:null,idealAtkAng:null},
+  {name:'Brent Rooker',team:'ATH',pos:'DH',batSpd:75.2,ev:98.8,barrel:18.2,blast:33.3,pull:36.4,atkAng:null,idealAtkAng:null},
+  {name:'Matt Olson',team:'ATL',pos:'1B',batSpd:75.1,ev:92.2,barrel:0.0,blast:17.6,pull:33.3,atkAng:null,idealAtkAng:null},
 ];
 const SAMPLE_HRS={'Nick Kurtz':2,'Yordan Alvarez':2,'Kyle Schwarber':1,'Munetaka Murakami':2,'Brent Rooker':1,'James Wood':1,'Elly De La Cruz':1,'Coby Mayo':1};
 
@@ -419,6 +428,8 @@ function resetFilters(){
   document.getElementById('hrOnly').checked=false;
   document.getElementById('atkAngMinVal').textContent='≥ -20°';
   document.getElementById('atkAngMaxVal').textContent='≤ 40°';
+  document.getElementById('idealAtkAngMin').value=0;
+  document.getElementById('idealAtkAngVal').textContent='≥ 0%';
   document.getElementById('bsVal').textContent='≥ 65.0';
   document.getElementById('evVal').textContent='≥ 75.0';
   document.getElementById('barrelVal').textContent='≥ 0%';
@@ -438,6 +449,8 @@ function initSliderFills(){
   if(pmn&&pmnf)pmnf.style.width=parseFloat(pmn.value)+'%';
   const pmx=document.getElementById('pullMax'),pmxf=document.getElementById('pullMaxFill');
   if(pmx&&pmxf)pmxf.style.width=parseFloat(pmx.value)+'%';
+  const iaa=document.getElementById('idealAtkAngMin'),iaaf=document.getElementById('idealAtkAngFill');
+  if(iaa&&iaaf)iaaf.style.width=parseFloat(iaa.value)+'%';
 }
 
 function toggleFilters(){
@@ -543,6 +556,7 @@ async function fetchAll(){
       blast:p['BlastContact%']==null?null:parsePct(p['BlastContact%']??0),
       pull:p['Pull%']==null?null:parsePct(p['Pull%']??0),
       atkAng:(p['AttackAngle']===undefined||p['AttackAngle']===null)?null:parseFloat(p['AttackAngle']),
+      idealAtkAng:(p['IdealAttackAngle%']===undefined||p['IdealAttackAngle%']===null)?null:parsePct(p['IdealAttackAngle%']),
     })).filter(p=>p.batSpd>0);
     if(!mapped.length){showBanner('API returned no data — showing sample');loadSample();return;}
     hideBanner();
@@ -579,12 +593,13 @@ function renderCards(){
   const pullMax=parseFloat(document.getElementById('pullMax').value);
   const atkAngMin=parseFloat(document.getElementById('atkAngMin').value);
   const atkAngMax=parseFloat(document.getElementById('atkAngMax').value);
+  const idealAtkAngMin=parseFloat(document.getElementById('idealAtkAngMin').value);
   const hrOnly=document.getElementById('hrOnly').checked;
 
-  let list=allPlayers.filter(p=>p.batSpd>=bsMin&&p.ev>=evMin&&(p.barrel??0)>=barrelMin&&(p.blast??0)>=blastMin&&(p.pull??0)>=pullMin&&(p.pull??100)<=pullMax&&(p.atkAng===null||p.atkAng===undefined||(p.atkAng>=atkAngMin&&p.atkAng<=atkAngMax)));
+  let list=allPlayers.filter(p=>p.batSpd>=bsMin&&p.ev>=evMin&&(p.barrel??0)>=barrelMin&&(p.blast??0)>=blastMin&&(p.pull??0)>=pullMin&&(p.pull??100)<=pullMax&&(p.atkAng===null||p.atkAng===undefined||(p.atkAng>=atkAngMin&&p.atkAng<=atkAngMax))&&(p.idealAtkAng===null||p.idealAtkAng===undefined||(p.idealAtkAng>=idealAtkAngMin)));
   if(hrOnly)list=list.filter(p=>getHRs(p.name)>0);
 
-  const active=[bsMin>65,evMin>75,barrelMin>0,blastMin>0,pullMin>0,pullMax<100,atkAngMin>-20,atkAngMax<40,hrOnly].filter(Boolean).length;
+  const active=[bsMin>65,evMin>75,barrelMin>0,blastMin>0,pullMin>0,pullMax<100,atkAngMin>-20,atkAngMax<40,idealAtkAngMin>0,hrOnly].filter(Boolean).length;
   const chip=document.getElementById('activeChip');
   chip.textContent=active+' active';chip.classList.toggle('show',active>0);
 
@@ -626,6 +641,7 @@ function renderCards(){
     <div class="stat-row"><span class="stat-name">Blast%</span>${bar(p.blast,0,50,C.blast)}<span class="stat-val">${p.blast===null?'—':p.blast.toFixed(1)+'%'}</span></div>
     <div class="stat-row"><span class="stat-name">Pull%</span>${bar(p.pull,0,100,C.pull)}<span class="stat-val">${p.pull===null?'—':p.pull.toFixed(1)+'%'}</span></div>
     <div class="stat-row"><span class="stat-name">Atk Ang</span>${bar(p.atkAng==null?null:(p.atkAng+20),0,60,'#f472b6')}<span class="stat-val">${p.atkAng==null?'—':p.atkAng.toFixed(1)+'°'}</span></div>
+    <div class="stat-row"><span class="stat-name">Ideal%</span>${bar(p.idealAtkAng,0,100,'#34d399')}<span class="stat-val">${p.idealAtkAng==null?'—':p.idealAtkAng.toFixed(1)+'%'}</span></div>
   </div>
 </div>`;
   }).join('');
