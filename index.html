@@ -542,7 +542,7 @@ async function fetchAll(){
       barrel:p['Barrel%']==null?null:parsePct(p['Barrel%']??0),
       blast:p['BlastContact%']==null?null:parsePct(p['BlastContact%']??0),
       pull:p['Pull%']==null?null:parsePct(p['Pull%']??0),
-      atkAng:p['AttackAngle']==null?null:parseFloat(p['AttackAngle']??0),
+      atkAng:(p['AttackAngle']===undefined||p['AttackAngle']===null)?null:parseFloat(p['AttackAngle']),
     })).filter(p=>p.batSpd>0);
     if(!mapped.length){showBanner('API returned no data — showing sample');loadSample();return;}
     hideBanner();
@@ -578,7 +578,7 @@ function renderCards(){
   const pullMax=parseFloat(document.getElementById('pullMax').value);
   const hrOnly=document.getElementById('hrOnly').checked;
 
-  let list=allPlayers.filter(p=>p.batSpd>=bsMin&&p.ev>=evMin&&(p.barrel??0)>=barrelMin&&(p.blast??0)>=blastMin&&(p.pull??0)>=pullMin&&(p.pull??100)<=pullMax&&(p.atkAng??-20)>=atkAngMin&&(p.atkAng??40)<=atkAngMax);
+  let list=allPlayers.filter(p=>p.batSpd>=bsMin&&p.ev>=evMin&&(p.barrel??0)>=barrelMin&&(p.blast??0)>=blastMin&&(p.pull??0)>=pullMin&&(p.pull??100)<=pullMax&&(p.atkAng===null||p.atkAng===undefined||(p.atkAng>=atkAngMin&&p.atkAng<=atkAngMax)));
   if(hrOnly)list=list.filter(p=>getHRs(p.name)>0);
 
   const pullMin=parseFloat(document.getElementById('pullMin').value);
