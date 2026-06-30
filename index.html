@@ -575,15 +575,15 @@ function renderCards(){
   const evMin=parseFloat(document.getElementById('evMin').value);
   const barrelMin=parseFloat(document.getElementById('barrelMin').value);
   const blastMin=parseFloat(document.getElementById('blastMin').value);
+  const pullMin=parseFloat(document.getElementById('pullMin').value);
   const pullMax=parseFloat(document.getElementById('pullMax').value);
+  const atkAngMin=parseFloat(document.getElementById('atkAngMin').value);
+  const atkAngMax=parseFloat(document.getElementById('atkAngMax').value);
   const hrOnly=document.getElementById('hrOnly').checked;
 
   let list=allPlayers.filter(p=>p.batSpd>=bsMin&&p.ev>=evMin&&(p.barrel??0)>=barrelMin&&(p.blast??0)>=blastMin&&(p.pull??0)>=pullMin&&(p.pull??100)<=pullMax&&(p.atkAng===null||p.atkAng===undefined||(p.atkAng>=atkAngMin&&p.atkAng<=atkAngMax)));
   if(hrOnly)list=list.filter(p=>getHRs(p.name)>0);
 
-  const pullMin=parseFloat(document.getElementById('pullMin').value);
-  const atkAngMin=parseFloat(document.getElementById('atkAngMin').value);
-  const atkAngMax=parseFloat(document.getElementById('atkAngMax').value);
   const active=[bsMin>65,evMin>75,barrelMin>0,blastMin>0,pullMin>0,pullMax<100,atkAngMin>-20,atkAngMax<40,hrOnly].filter(Boolean).length;
   const chip=document.getElementById('activeChip');
   chip.textContent=active+' active';chip.classList.toggle('show',active>0);
