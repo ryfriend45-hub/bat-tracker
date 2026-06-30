@@ -305,31 +305,31 @@ header{padding:calc(var(--st) + 14px) 18px 12px;background:var(--bg);border-bott
 
 <script>
 const SAMPLE=[
-  {name:'Nick Kurtz',team:'ATH',pos:'1B',batSpd:79.4,ev:96.5,barrel:37.5,blast:26.7,pull:12.5},
-  {name:'Jordan Walker',team:'STL',pos:'OF',batSpd:78.7,ev:92.3,barrel:14.3,blast:22.2,pull:28.6},
-  {name:'Jo Adell',team:'LAA',pos:'OF',batSpd:78.6,ev:96.9,barrel:20.0,blast:9.5,pull:20.0},
-  {name:'Junior Caminero',team:'TBR',pos:'3B',batSpd:78.1,ev:91.1,barrel:9.1,blast:23.1,pull:54.5},
-  {name:'Yordan Alvarez',team:'HOU',pos:'DH',batSpd:78.0,ev:94.2,barrel:16.7,blast:20.0,pull:16.7},
-  {name:'Henry Bolte',team:'ATH',pos:'OF',batSpd:77.5,ev:93.9,barrel:0.0,blast:37.5,pull:27.3},
-  {name:'Jorge Soler',team:'LAA',pos:'DH',batSpd:77.3,ev:93.3,barrel:0.0,blast:10.0,pull:100.0},
-  {name:'Oneil Cruz',team:'PIT',pos:'SS',batSpd:77.1,ev:97.6,barrel:0.0,blast:25.0,pull:37.5},
-  {name:'James Wood',team:'WSN',pos:'OF',batSpd:76.9,ev:100.1,barrel:22.2,blast:42.9,pull:11.1},
-  {name:'Coby Mayo',team:'BAL',pos:'1B',batSpd:76.9,ev:97.5,barrel:14.3,blast:14.3,pull:71.4},
-  {name:'Austin Riley',team:'ATL',pos:'3B',batSpd:76.8,ev:86.5,barrel:0.0,blast:11.5,pull:60.0},
-  {name:'Zach Cole',team:'HOU',pos:'OF',batSpd:76.7,ev:93.2,barrel:30.0,blast:17.6,pull:30.0},
-  {name:'Corbin Carroll',team:'ARI',pos:'OF',batSpd:76.5,ev:93.1,barrel:11.1,blast:21.4,pull:66.7},
-  {name:'Munetaka Murakami',team:'CHW',pos:'1B',batSpd:76.4,ev:93.6,barrel:40.0,blast:31.3,pull:30.0},
-  {name:'Kyle Schwarber',team:'PHI',pos:'DH',batSpd:76.3,ev:98.8,barrel:44.4,blast:25.0,pull:44.4},
-  {name:'Tyler Soderstrom',team:'ATH',pos:'1B',batSpd:76.2,ev:92.3,barrel:10.0,blast:30.8,pull:40.0},
-  {name:'Mike Trout',team:'LAA',pos:'OF',batSpd:76.1,ev:96.3,barrel:14.3,blast:12.5,pull:0.0},
-  {name:'Gunnar Henderson',team:'BAL',pos:'SS',batSpd:76.0,ev:90.1,barrel:10.0,blast:16.7,pull:30.0},
-  {name:'Fernando Tatis Jr.',team:'SDP',pos:'SS',batSpd:75.9,ev:88.1,barrel:9.1,blast:15.8,pull:45.5},
-  {name:'Shea Langeliers',team:'ATH',pos:'C',batSpd:75.9,ev:92.5,barrel:7.1,blast:33.3,pull:21.4},
-  {name:'Julio Rodríguez',team:'SEA',pos:'OF',batSpd:75.7,ev:90.7,barrel:0.0,blast:21.4,pull:41.7},
-  {name:'Elly De La Cruz',team:'CIN',pos:'SS',batSpd:75.3,ev:95.3,barrel:15.4,blast:25.0,pull:23.1},
-  {name:'Jake Burger',team:'TEX',pos:'1B',batSpd:75.3,ev:88.9,barrel:0.0,blast:0.0,pull:50.0},
-  {name:'Brent Rooker',team:'ATH',pos:'DH',batSpd:75.2,ev:98.8,barrel:18.2,blast:33.3,pull:36.4},
-  {name:'Matt Olson',team:'ATL',pos:'1B',batSpd:75.1,ev:92.2,barrel:0.0,blast:17.6,pull:33.3},
+  {name:'Nick Kurtz',team:'ATH',pos:'1B',batSpd:79.4,ev:96.5,barrel:37.5,blast:26.7,pull:12.5,atkAng:12.3},
+  {name:'Jordan Walker',team:'STL',pos:'OF',batSpd:78.7,ev:92.3,barrel:14.3,blast:22.2,pull:28.6,atkAng:null},
+  {name:'Jo Adell',team:'LAA',pos:'OF',batSpd:78.6,ev:96.9,barrel:20.0,blast:9.5,pull:20.0,atkAng:null},
+  {name:'Junior Caminero',team:'TBR',pos:'3B',batSpd:78.1,ev:91.1,barrel:9.1,blast:23.1,pull:54.5,atkAng:null},
+  {name:'Yordan Alvarez',team:'HOU',pos:'DH',batSpd:78.0,ev:94.2,barrel:16.7,blast:20.0,pull:16.7,atkAng:null},
+  {name:'Henry Bolte',team:'ATH',pos:'OF',batSpd:77.5,ev:93.9,barrel:0.0,blast:37.5,pull:27.3,atkAng:null},
+  {name:'Jorge Soler',team:'LAA',pos:'DH',batSpd:77.3,ev:93.3,barrel:0.0,blast:10.0,pull:100.0,atkAng:null},
+  {name:'Oneil Cruz',team:'PIT',pos:'SS',batSpd:77.1,ev:97.6,barrel:0.0,blast:25.0,pull:37.5,atkAng:null},
+  {name:'James Wood',team:'WSN',pos:'OF',batSpd:76.9,ev:100.1,barrel:22.2,blast:42.9,pull:11.1,atkAng:null},
+  {name:'Coby Mayo',team:'BAL',pos:'1B',batSpd:76.9,ev:97.5,barrel:14.3,blast:14.3,pull:71.4,atkAng:null},
+  {name:'Austin Riley',team:'ATL',pos:'3B',batSpd:76.8,ev:86.5,barrel:0.0,blast:11.5,pull:60.0,atkAng:null},
+  {name:'Zach Cole',team:'HOU',pos:'OF',batSpd:76.7,ev:93.2,barrel:30.0,blast:17.6,pull:30.0,atkAng:null},
+  {name:'Corbin Carroll',team:'ARI',pos:'OF',batSpd:76.5,ev:93.1,barrel:11.1,blast:21.4,pull:66.7,atkAng:null},
+  {name:'Munetaka Murakami',team:'CHW',pos:'1B',batSpd:76.4,ev:93.6,barrel:40.0,blast:31.3,pull:30.0,atkAng:null},
+  {name:'Kyle Schwarber',team:'PHI',pos:'DH',batSpd:76.3,ev:98.8,barrel:44.4,blast:25.0,pull:44.4,atkAng:null},
+  {name:'Tyler Soderstrom',team:'ATH',pos:'1B',batSpd:76.2,ev:92.3,barrel:10.0,blast:30.8,pull:40.0,atkAng:null},
+  {name:'Mike Trout',team:'LAA',pos:'OF',batSpd:76.1,ev:96.3,barrel:14.3,blast:12.5,pull:0.0,atkAng:null},
+  {name:'Gunnar Henderson',team:'BAL',pos:'SS',batSpd:76.0,ev:90.1,barrel:10.0,blast:16.7,pull:30.0,atkAng:null},
+  {name:'Fernando Tatis Jr.',team:'SDP',pos:'SS',batSpd:75.9,ev:88.1,barrel:9.1,blast:15.8,pull:45.5,atkAng:null},
+  {name:'Shea Langeliers',team:'ATH',pos:'C',batSpd:75.9,ev:92.5,barrel:7.1,blast:33.3,pull:21.4,atkAng:null},
+  {name:'Julio Rodríguez',team:'SEA',pos:'OF',batSpd:75.7,ev:90.7,barrel:0.0,blast:21.4,pull:41.7,atkAng:null},
+  {name:'Elly De La Cruz',team:'CIN',pos:'SS',batSpd:75.3,ev:95.3,barrel:15.4,blast:25.0,pull:23.1,atkAng:null},
+  {name:'Jake Burger',team:'TEX',pos:'1B',batSpd:75.3,ev:88.9,barrel:0.0,blast:0.0,pull:50.0,atkAng:null},
+  {name:'Brent Rooker',team:'ATH',pos:'DH',batSpd:75.2,ev:98.8,barrel:18.2,blast:33.3,pull:36.4,atkAng:null},
+  {name:'Matt Olson',team:'ATL',pos:'1B',batSpd:75.1,ev:92.2,barrel:0.0,blast:17.6,pull:33.3,atkAng:null},
 ];
 const SAMPLE_HRS={'Nick Kurtz':2,'Yordan Alvarez':2,'Kyle Schwarber':1,'Munetaka Murakami':2,'Brent Rooker':1,'James Wood':1,'Elly De La Cruz':1,'Coby Mayo':1};
 
@@ -620,12 +620,12 @@ function renderCards(){
     ${hot?`<div class="hr-pill">🔥</div>`:''}
   </div>
   <div class="stat-rows">
-    <div class="stat-row"><span class="stat-name">Bat Spd</span>${bar(p.batSpd,65,85,C.batSpd)}<span class="stat-val">${p.batSpd.toFixed(1)}</span></div>
-    <div class="stat-row"><span class="stat-name">Exit Velo</span>${bar(p.ev,75,105,C.ev)}<span class="stat-val">${p.ev.toFixed(1)}</span></div>
+    <div class="stat-row"><span class="stat-name">Bat Spd</span>${bar(p.batSpd,65,85,C.batSpd)}<span class="stat-val">${p.batSpd==null?'—':p.batSpd.toFixed(1)}</span></div>
+    <div class="stat-row"><span class="stat-name">Exit Velo</span>${bar(p.ev,75,105,C.ev)}<span class="stat-val">${p.ev==null?'—':p.ev.toFixed(1)}</span></div>
     <div class="stat-row"><span class="stat-name">Barrel%</span>${bar(p.barrel,0,50,C.barrel)}<span class="stat-val">${p.barrel===null?'—':p.barrel.toFixed(1)+'%'}</span></div>
     <div class="stat-row"><span class="stat-name">Blast%</span>${bar(p.blast,0,50,C.blast)}<span class="stat-val">${p.blast===null?'—':p.blast.toFixed(1)+'%'}</span></div>
     <div class="stat-row"><span class="stat-name">Pull%</span>${bar(p.pull,0,100,C.pull)}<span class="stat-val">${p.pull===null?'—':p.pull.toFixed(1)+'%'}</span></div>
-    <div class="stat-row"><span class="stat-name">Atk Ang</span>${bar((p.atkAng??-20)+20,0,60,'#f472b6')}<span class="stat-val">${p.atkAng===null?'—':p.atkAng.toFixed(1)+'°'}</span></div>
+    <div class="stat-row"><span class="stat-name">Atk Ang</span>${bar(p.atkAng==null?null:(p.atkAng+20),0,60,'#f472b6')}<span class="stat-val">${p.atkAng==null?'—':p.atkAng.toFixed(1)+'°'}</span></div>
   </div>
 </div>`;
   }).join('');
