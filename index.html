@@ -185,6 +185,7 @@ header{padding:calc(var(--st) + 14px) 18px 12px;background:var(--bg);border-bott
       <span class="active-chip" id="activeChip"></span>
     </span>
     <div style="display:flex;align-items:center;gap:8px">
+      <button onclick="event.stopPropagation();applyIdeal()" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--blue2);background:none;border:none;cursor:pointer;padding:2px 0;font-family:var(--font)" aria-label="Apply ideal range">Ideal</button>
       <button onclick="event.stopPropagation();resetFilters()" style="font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;padding:2px 0;font-family:var(--font)" id="resetBtn" aria-label="Reset filters">Reset</button>
       <i class="ti ti-chevron-down fchev" id="filterChevron" aria-hidden="true"></i>
     </div>
@@ -229,13 +230,40 @@ header{padding:calc(var(--st) + 14px) 18px 12px;background:var(--bg);border-bott
         <span class="fs-val" id="blastVal">≥ 0%</span>
       </div>
       <div class="fs-row">
-        <span class="fs-name">Pull%</span>
+        <span class="fs-name">Pull% ≥</span>
         <div class="fs-track">
-          <div class="fs-fill" id="pullFill" style="width:100%;background:var(--purple)"></div>
-          <input class="fs-input" type="range" id="pullMax" min="0" max="100" step="1" value="100"
-            oninput="onSlider('pull',this.value,'pullVal',0,100,'≤ ','%',0)">
+          <div class="fs-fill" id="pullMinFill" style="width:0%;background:var(--purple)"></div>
+          <input class="fs-input" type="range" id="pullMin" min="0" max="100" step="1" value="0"
+            oninput="onSlider('pullMin',this.value,'pullMinVal',0,100,'≥ ','%',0)">
         </div>
-        <span class="fs-val" id="pullVal">≤ 100%</span>
+        <span class="fs-val" id="pullMinVal">≥ 0%</span>
+      </div>
+      <div class="fs-row">
+        <span class="fs-name">Pull% ≤</span>
+        <div class="fs-track">
+          <div class="fs-fill" id="pullMaxFill" style="width:100%;background:var(--purple)"></div>
+          <input class="fs-input" type="range" id="pullMax" min="0" max="100" step="1" value="100"
+            oninput="onSlider('pullMax',this.value,'pullMaxVal',0,100,'≤ ','%',0)">
+        </div>
+        <span class="fs-val" id="pullMaxVal">≤ 100%</span>
+      </div>
+      <div class="fs-row">
+        <span class="fs-name">AtkAng ≥</span>
+        <div class="fs-track">
+          <div class="fs-fill" id="atkAngMinFill" style="width:0%;background:#f472b6"></div>
+          <input class="fs-input" type="range" id="atkAngMin" min="-20" max="40" step="1" value="-20"
+            oninput="onSliderRaw('atkAngMin',this.value,'atkAngMinVal',-20,40)">
+        </div>
+        <span class="fs-val" id="atkAngMinVal">≥ -20°</span>
+      </div>
+      <div class="fs-row">
+        <span class="fs-name">AtkAng ≤</span>
+        <div class="fs-track">
+          <div class="fs-fill" id="atkAngMaxFill" style="width:100%;background:#f472b6"></div>
+          <input class="fs-input" type="range" id="atkAngMax" min="-20" max="40" step="1" value="40"
+            oninput="onSliderRaw('atkAngMax',this.value,'atkAngMaxVal',-20,40)">
+        </div>
+        <span class="fs-val" id="atkAngMaxVal">≤ 40°</span>
       </div>
     </div>
     <div class="hr-filter-row">
@@ -339,6 +367,14 @@ function toggleDateEdit(){
 
 function onDateChange(){updateDatePills();fetchAll();}
 
+function onSliderRaw(id,val,labelId,min,max){
+  const v=parseFloat(val);
+  const pct=((v-min)/(max-min)*100).toFixed(1);
+  document.getElementById(labelId).textContent=(id.includes('Min')?'≥ ':'≤ ')+v+'°';
+  const fill=document.getElementById(id+'Fill');
+  if(fill)fill.style.width=pct+'%';
+  renderCards();
+}
 function onSlider(key,val,labelId,min,max,prefix,suffix,decimals){
   const v=parseFloat(val);
   const pct=((v-min)/(max-min)*100).toFixed(1);
@@ -349,18 +385,46 @@ function onSlider(key,val,labelId,min,max,prefix,suffix,decimals){
   renderCards();
 }
 
+function applyIdeal(){
+  document.getElementById('bsMin').value=75;
+  document.getElementById('evMin').value=75;
+  document.getElementById('barrelMin').value=0;
+  document.getElementById('blastMin').value=15;
+  document.getElementById('pullMin').value=40;
+  document.getElementById('pullMax').value=100;
+  document.getElementById('atkAngMin').value=5;
+  document.getElementById('atkAngMax').value=20;
+  document.getElementById('hrOnly').checked=false;
+  document.getElementById('bsVal').textContent='≥ 75.0';
+  document.getElementById('evVal').textContent='≥ 75.0';
+  document.getElementById('barrelVal').textContent='≥ 0%';
+  document.getElementById('blastVal').textContent='≥ 15%';
+  document.getElementById('pullMinVal').textContent='≥ 40%';
+  document.getElementById('pullMaxVal').textContent='≤ 100%';
+  document.getElementById('atkAngMinVal').textContent='≥ 5°';
+  document.getElementById('atkAngMaxVal').textContent='≤ 20°';
+  initSliderFills();
+  renderCards();
+}
+
 function resetFilters(){
   document.getElementById('bsMin').value=65;
   document.getElementById('evMin').value=75;
   document.getElementById('barrelMin').value=0;
   document.getElementById('blastMin').value=0;
+  document.getElementById('pullMin').value=0;
   document.getElementById('pullMax').value=100;
+  document.getElementById('atkAngMin').value=-20;
+  document.getElementById('atkAngMax').value=40;
   document.getElementById('hrOnly').checked=false;
+  document.getElementById('atkAngMinVal').textContent='≥ -20°';
+  document.getElementById('atkAngMaxVal').textContent='≤ 40°';
   document.getElementById('bsVal').textContent='≥ 65.0';
   document.getElementById('evVal').textContent='≥ 75.0';
   document.getElementById('barrelVal').textContent='≥ 0%';
   document.getElementById('blastVal').textContent='≥ 0%';
-  document.getElementById('pullVal').textContent='≤ 100%';
+  document.getElementById('pullMinVal').textContent='≥ 0%';
+  document.getElementById('pullMaxVal').textContent='≤ 100%';
   initSliderFills();
   renderCards();
 }
@@ -370,8 +434,10 @@ function initSliderFills(){
     const el=document.getElementById(k+'Min'),fill=document.getElementById(k+'Fill');
     if(el&&fill)fill.style.width=((parseFloat(el.value)-mn)/(mx-mn)*100).toFixed(1)+'%';
   });
-  const p=document.getElementById('pullMax'),pf=document.getElementById('pullFill');
-  if(p&&pf)pf.style.width=parseFloat(p.value)+'%';
+  const pmn=document.getElementById('pullMin'),pmnf=document.getElementById('pullMinFill');
+  if(pmn&&pmnf)pmnf.style.width=parseFloat(pmn.value)+'%';
+  const pmx=document.getElementById('pullMax'),pmxf=document.getElementById('pullMaxFill');
+  if(pmx&&pmxf)pmxf.style.width=parseFloat(pmx.value)+'%';
 }
 
 function toggleFilters(){
@@ -476,6 +542,7 @@ async function fetchAll(){
       barrel:p['Barrel%']==null?null:parsePct(p['Barrel%']??0),
       blast:p['BlastContact%']==null?null:parsePct(p['BlastContact%']??0),
       pull:p['Pull%']==null?null:parsePct(p['Pull%']??0),
+      atkAng:p['AttackAngle']==null?null:parseFloat(p['AttackAngle']??0),
     })).filter(p=>p.batSpd>0);
     if(!mapped.length){showBanner('API returned no data — showing sample');loadSample();return;}
     hideBanner();
@@ -511,10 +578,13 @@ function renderCards(){
   const pullMax=parseFloat(document.getElementById('pullMax').value);
   const hrOnly=document.getElementById('hrOnly').checked;
 
-  let list=allPlayers.filter(p=>p.batSpd>=bsMin&&p.ev>=evMin&&(p.barrel??0)>=barrelMin&&(p.blast??0)>=blastMin&&(p.pull??100)<=pullMax);
+  let list=allPlayers.filter(p=>p.batSpd>=bsMin&&p.ev>=evMin&&(p.barrel??0)>=barrelMin&&(p.blast??0)>=blastMin&&(p.pull??0)>=pullMin&&(p.pull??100)<=pullMax&&(p.atkAng??-20)>=atkAngMin&&(p.atkAng??40)<=atkAngMax);
   if(hrOnly)list=list.filter(p=>getHRs(p.name)>0);
 
-  const active=[bsMin>65,evMin>75,barrelMin>0,blastMin>0,pullMax<100,hrOnly].filter(Boolean).length;
+  const pullMin=parseFloat(document.getElementById('pullMin').value);
+  const atkAngMin=parseFloat(document.getElementById('atkAngMin').value);
+  const atkAngMax=parseFloat(document.getElementById('atkAngMax').value);
+  const active=[bsMin>65,evMin>75,barrelMin>0,blastMin>0,pullMin>0,pullMax<100,atkAngMin>-20,atkAngMax<40,hrOnly].filter(Boolean).length;
   const chip=document.getElementById('activeChip');
   chip.textContent=active+' active';chip.classList.toggle('show',active>0);
 
@@ -555,6 +625,7 @@ function renderCards(){
     <div class="stat-row"><span class="stat-name">Barrel%</span>${bar(p.barrel,0,50,C.barrel)}<span class="stat-val">${p.barrel===null?'—':p.barrel.toFixed(1)+'%'}</span></div>
     <div class="stat-row"><span class="stat-name">Blast%</span>${bar(p.blast,0,50,C.blast)}<span class="stat-val">${p.blast===null?'—':p.blast.toFixed(1)+'%'}</span></div>
     <div class="stat-row"><span class="stat-name">Pull%</span>${bar(p.pull,0,100,C.pull)}<span class="stat-val">${p.pull===null?'—':p.pull.toFixed(1)+'%'}</span></div>
+    <div class="stat-row"><span class="stat-name">Atk Ang</span>${bar((p.atkAng??-20)+20,0,60,'#f472b6')}<span class="stat-val">${p.atkAng===null?'—':p.atkAng.toFixed(1)+'°'}</span></div>
   </div>
 </div>`;
   }).join('');
